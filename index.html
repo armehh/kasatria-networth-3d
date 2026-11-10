@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>People Net Worth 3D</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="container"></div>
+
+  <!-- Login -->
+  <section id="login" class="overlay">
+    <div class="card">
+      <h1>People Net Worth 3D</h1>
+      <p>Sign in with your Google account to view the data.</p>
+      <button id="btn-google" class="google-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/>
+          <path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.100 0 24s.9 7.600 2.600 10.800l7.900-6.100z"/>
+          <path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.500-5.800c-2.100 1.400-4.800 2.300-8.400 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/>
+        </svg>
+        <span>Sign in with Google</span>
+      </button>
+      <button id="btn-demo" class="link-btn" type="button" hidden>Preview with local sample data</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </div>
+  </section>
+
+  <!-- Loading -->
+  <div id="loading" class="loading" hidden>Loading data…</div>
+
+  <!-- App UI -->
+  <header id="user" class="user" hidden>
+    <img id="user-avatar" alt="" referrerpolicy="no-referrer">
+    <span id="user-name"></span>
+    <button id="btn-signout" type="button">Sign out</button>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <div id="legend" class="legend" hidden>
+    <span class="chip red"></span>&lt; $100K
+    <span class="chip orange"></span>$100K – $200K
+    <span class="chip green"></span>&gt; $200K
+  </div>
+
+  <nav id="menu" class="menu" hidden>
+    <button id="table" type="button">TABLE</button>
+    <button id="sphere" type="button">SPHERE</button>
+    <button id="helix" type="button">HELIX</button>
+    <button id="grid" type="button">GRID</button>
+  </nav>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

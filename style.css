@@ -1,0 +1,78 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; overflow: hidden;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #fff; }
+#container { position: absolute; inset: 0; }
+
+/* ---------- Tiles ---------- */
+.tile {
+  --c: 0, 200, 120;           /* overridden by tier-* */
+  position: relative;
+  width: 120px; height: 160px;
+  border: 1px solid rgba(var(--c), .55);
+  background: rgba(var(--c), .22);
+  box-shadow: 0 0 14px rgba(var(--c), .45);
+  text-align: center; cursor: default; user-select: none;
+  transition: box-shadow .2s, background .2s;
+}
+.tile:hover { box-shadow: 0 0 22px rgba(var(--c), .95); background: rgba(var(--c), .4); }
+.tile.tier-red    { --c: 239, 48, 34; }
+.tile.tier-orange { --c: 253, 160, 20; }
+.tile.tier-green  { --c: 58, 200, 90; }
+
+.tile .country { position: absolute; top: 6px; left: 8px; font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,.85); }
+.tile .age { position: absolute; top: 6px; right: 8px; font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,.85); }
+.tile .photo, .tile .photo-fallback {
+  position: absolute; top: 24px; left: 20px; width: 80px; height: 80px;
+  object-fit: cover; border-radius: 3px; background: rgba(255,255,255,.1);
+}
+.tile .photo-fallback { display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 700; color: rgba(255,255,255,.8); }
+.tile .name { position: absolute; top: 110px; left: 4px; right: 4px; font-size: 11px; font-weight: 700;
+  line-height: 1.2; max-height: 27px; overflow: hidden; }
+.tile .interest { position: absolute; bottom: 8px; left: 4px; right: 4px; font-size: 10px;
+  color: rgba(255,255,255,.75); }
+
+/* ---------- Overlays / UI ---------- */
+.overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at center, #10202a 0%, #000 70%); z-index: 10; padding: 16px; }
+.overlay[hidden], [hidden] { display: none !important; }
+.card { width: min(380px, 100%); padding: 32px 28px; text-align: center;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.15); border-radius: 12px; }
+.card h1 { margin: 0 0 8px; font-size: 22px; font-weight: 600; }
+.card p { margin: 0 0 20px; color: rgba(255,255,255,.7); font-size: 14px; }
+.google-btn { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px;
+  background: #fff; color: #3c4043; border: 0; border-radius: 4px; font-size: 14px; font-weight: 500;
+  cursor: pointer; }
+.google-btn:hover { background: #f1f3f4; }
+.link-btn { display: block; margin: 16px auto 0; background: none; border: 0; color: #7fd6d6;
+  font-size: 13px; text-decoration: underline; cursor: pointer; }
+.error { color: #ff8a80; min-height: 1.2em; margin: 16px 0 0 !important; font-size: 13px !important; }
+
+.loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.8); z-index: 9; font-size: 16px; letter-spacing: .05em; }
+
+.user { position: fixed; top: 12px; right: 16px; z-index: 5; display: flex; align-items: center;
+  gap: 8px; font-size: 13px; }
+.user img { width: 28px; height: 28px; border-radius: 50%; }
+.user button, .menu button {
+  color: rgba(127,255,255,.9); background: rgba(0,255,255,.08);
+  border: 1px solid rgba(127,255,255,.5); padding: 8px 14px; cursor: pointer;
+  font-size: 13px; letter-spacing: .05em; }
+.user button { padding: 4px 10px; font-size: 12px; }
+.user button:hover, .menu button:hover { background: rgba(0,255,255,.3); }
+.menu { position: fixed; bottom: 20px; left: 0; right: 0; z-index: 5; text-align: center; }
+.menu button { margin: 0 3px; }
+.menu button.active { background: rgba(0,255,255,.35); color: #fff; }
+
+.legend { position: fixed; bottom: 70px; left: 0; right: 0; z-index: 5; text-align: center;
+  font-size: 12px; color: rgba(255,255,255,.8); }
+.legend .chip { display: inline-block; width: 12px; height: 12px; margin: 0 6px 0 14px;
+  vertical-align: -2px; border-radius: 2px; }
+.chip.red { background: #ef3022; } .chip.orange { background: #fda014; } .chip.green { background: #3ac85a; }
+
+.banner { position: fixed; top: 12px; left: 16px; z-index: 5; max-width: 60vw; padding: 6px 10px;
+  font-size: 12px; background: rgba(253,160,20,.2); border: 1px solid rgba(253,160,20,.6); border-radius: 4px; }
+
+@media (max-width: 600px) { .user span { display: none; } .banner { max-width: 50vw; } }
