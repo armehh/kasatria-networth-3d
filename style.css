@@ -3,9 +3,8 @@ html, body { margin: 0; height: 100%; background: #000; overflow: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #fff; }
 #container { position: absolute; inset: 0; }
 
-/* ---------- Tiles ---------- */
 .tile {
-  --c: 0, 200, 120;           /* overridden by tier-* */
+  --c: 0, 200, 120;
   position: relative;
   width: 120px; height: 160px;
   border: 1px solid rgba(var(--c), .55);
@@ -34,7 +33,6 @@ html, body { margin: 0; height: 100%; background: #000; overflow: hidden;
 .tile .interest { position: absolute; bottom: 8px; left: 4px; right: 4px; font-size: 10px;
   color: rgba(255,255,255,.75); }
 
-/* ---------- Overlays / UI ---------- */
 .overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
   background: radial-gradient(ellipse at center, #10202a 0%, #000 70%); z-index: 10; padding: 16px; }
 .overlay[hidden], [hidden] { display: none !important; }
