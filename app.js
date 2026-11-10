@@ -8,18 +8,14 @@ const $ = (id) => document.getElementById(id);
 const isPlaceholder = (v) => !v || /^YOUR_/.test(v);
 const configured = !isPlaceholder(CONFIG.GOOGLE_CLIENT_ID) && !isPlaceholder(CONFIG.SHEET_ID);
 
-/* ------------------------------------------------------------------ *
- *  Data
- * ------------------------------------------------------------------ */
 
-/** "$251,260.80" | 251260.8 -> 251260.8 */
 function parseMoney(v) {
   if (typeof v === 'number') return v;
   const n = parseFloat(String(v ?? '').replace(/[^0-9.\-]/g, ''));
   return Number.isFinite(n) ? n : 0;
 }
 
-/** Turn a 2D array (first row = header) into person objects. */
+
 function rowsToPeople(rows) {
   const norm = (s) => String(s ?? '').trim().toLowerCase().replace(/\s+/g, '');
   const header = rows[0].map(norm);
@@ -64,7 +60,7 @@ async function fetchSheet(accessToken) {
   return rowsToPeople(json.values || []);
 }
 
-/** Minimal CSV parser (quoted fields, escaped quotes) for the local demo fallback. */
+
 function parseCsv(text) {
   const rows = []; let row = []; let cell = ''; let q = false;
   for (let i = 0; i < text.length; i++) {
@@ -90,9 +86,6 @@ async function loadLocalCsv() {
   return rowsToPeople(parseCsv(await res.text()));
 }
 
-/* ------------------------------------------------------------------ *
- *  Google sign-in (Google Identity Services, token flow)
- * ------------------------------------------------------------------ */
 
 const SCOPES = ['openid', 'email', 'profile'];
 if (CONFIG.AUTH_MODE !== 'apikey') SCOPES.push('https://www.googleapis.com/auth/spreadsheets.readonly');
@@ -150,9 +143,6 @@ function signOut(token) {
   location.reload();
 }
 
-/* ------------------------------------------------------------------ *
- *  3D scene
- * ------------------------------------------------------------------ */
 
 let camera, scene, renderer, controls;
 const objects = [];
@@ -193,7 +183,6 @@ function makeTile(p) {
 }
 
 function buildLayouts(n) {
-  // TABLE — 20 columns x 10 rows
   const T_COLS = 20, T_DX = 140, T_DY = 180;
   const T_ROWS = Math.ceil(n / T_COLS);
   for (let i = 0; i < n; i++) {
@@ -206,7 +195,7 @@ function buildLayouts(n) {
     targets.table.push(o);
   }
 
-  // SPHERE
+
   const v = new THREE.Vector3();
   for (let i = 0; i < n; i++) {
     const phi = Math.acos(-1 + (2 * i) / n);
@@ -218,7 +207,6 @@ function buildLayouts(n) {
     targets.sphere.push(o);
   }
 
-  // DOUBLE HELIX — even tiles on strand A, odd tiles on strand B (180° apart)
   const H_R = 950, H_STEP_ANGLE = 0.3, H_STEP_Y = 16;
   const perStrand = Math.ceil(n / 2);
   for (let i = 0; i < n; i++) {
@@ -233,7 +221,6 @@ function buildLayouts(n) {
     targets.helix.push(o);
   }
 
-  // GRID — 5 (z) x 4 (y) x 10 (x)
   const G_X = 10, G_Y = 4, G_Z = 5, SX = 200, SY = 240, SZ = 500;
   for (let i = 0; i < n; i++) {
     const gx = i % G_X;
@@ -249,7 +236,7 @@ function buildLayouts(n) {
   }
 }
 
-// Grid is shown from an oblique angle (as in the brief) so the 5 depth layers don't hide each other.
+
 const CAMERA_POS = { table: [0, 0, 3200], sphere: [0, 0, 3200], helix: [0, 0, 3600], grid: [1500, 700, 3000] };
 
 function transform(list, duration = 1600, view = 'table') {
@@ -334,12 +321,9 @@ function startApp(people, profile, token) {
   setActive('table');
   transform(targets.table, 1500);
   animate();
-  window.__tiles = { count: people.length };   // handy for debugging / tests
+  window.__tiles = { count: people.length };  
 }
 
-/* ------------------------------------------------------------------ *
- *  Boot
- * ------------------------------------------------------------------ */
 
 $('btn-google').addEventListener('click', () => {
   if (!configured) {
